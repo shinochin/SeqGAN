@@ -1,5 +1,12 @@
 # SeqGAN
 
+## Extension for Tweet Data.
+
+ToDo
+* Convert texts to numbers. = Construct a vocabulary.
+  * Input file must composed of sequences of numbers.
+
+
 ## Requirements: 
 * **Tensorflow r1.0.1**
 * Python 2.7
