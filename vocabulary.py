@@ -20,7 +20,7 @@ class Vocab():
         for line in f:
             line = line.strip().split()
             line = map(lambda x: str(self.dic.token2id[x]), line)
-            line = u" ".join() + u"\n"
+            line = u" ".join(line) + u"\n"
             g.write(line)
         f.close()
         g.close()
@@ -31,7 +31,7 @@ class Vocab():
         for line in f:
             line = line.strip().split()
             line = map(lambda x: self.dic.id2token[int(x)], line)
-            line = u" ".join() + u"\n"
+            line = u" ".join(line) + u"\n"
             g.write(line)
         f.close()
         g.close()
