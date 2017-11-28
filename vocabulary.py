@@ -19,7 +19,7 @@ class Vocab():
         g = open(output_file, 'w')
         for line in f:
             line = line.strip().split()
-            line = map(lambda x: str(self.dic.token2id(x)), line)
+            line = map(lambda x: str(self.dic.token2id[x]), line)
             line = u" ".join() + u"\n"
             g.write(line)
         f.close()
@@ -30,7 +30,7 @@ class Vocab():
         g = codecs.open(output_file, 'w', 'utf-8')
         for line in f:
             line = line.strip().split()
-            line = map(lambda x: self.dic.id2token(int(x)), line)
+            line = map(lambda x: self.dic.id2token[int(x)], line)
             line = u" ".join() + u"\n"
             g.write(line)
         f.close()
