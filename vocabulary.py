@@ -4,6 +4,7 @@ import codecs
 class Vocab():
     def __init__(self):
         self.dic = Dictionary()
+        self.dic.add_documents([[u'<UNK>']])
         
     def construct(self, input_file):
         f = codecs.open(input_file, 'r', 'utf-8')

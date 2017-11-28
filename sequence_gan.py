@@ -85,9 +85,14 @@ def main():
     random.seed(SEED)
     np.random.seed(SEED)
     assert START_TOKEN == 0
+    
+    vocab = Vocab()
+    vocab.construct(parsed_tweet_file)
+    vocab.word2id(parsed_tweet_file, positive_file)
+    UNK = vocab.dic.token2id[u'<UNK>']
 
-    gen_data_loader = Gen_Data_loader(BATCH_SIZE)
-    likelihood_data_loader = Gen_Data_loader(BATCH_SIZE) # For testing
+    gen_data_loader = Gen_Data_loader(BATCH_SIZE, SEQ_LENGTH, UNK)
+    likelihood_data_loader = Gen_Data_loader(BATCH_SIZE, SEQ_LENGTH, UNK) # For testing
     vocab_size = 5000
     dis_data_loader = Dis_dataloader(BATCH_SIZE)
 
@@ -105,9 +110,6 @@ def main():
 
     # First, use the oracle model to provide the positive examples, which are sampled from the oracle data distribution
     # generate_samples(sess, target_lstm, BATCH_SIZE, generated_num, positive_file)
-    vocab = Vocab()
-    vocab.construct(parsed_tweet_file)
-    vocab.word2id(parsed_tweet_file, positive_file)
     gen_data_loader.create_batches(positive_file)
 
     log = open('save/experiment-log.txt', 'w')
