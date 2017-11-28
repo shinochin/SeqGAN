@@ -6,6 +6,7 @@ from generator import Generator
 from discriminator import Discriminator
 from rollout import ROLLOUT
 from target_lstm import TARGET_LSTM
+from vocabulary import Vocab
 import cPickle
 
 #########################################################################################
@@ -33,6 +34,8 @@ dis_batch_size = 64
 #  Basic Training Parameters
 #########################################################################################
 TOTAL_BATCH = 200
+parsed_tweet_file = 'save/parsed_tweet.txt'
+generated_tweet_file = 'save/generated_tweet_{}.txt'
 positive_file = 'save/real_data.txt'
 negative_file = 'save/generator_sample.txt'
 eval_file = 'save/eval_file.txt'
@@ -102,6 +105,9 @@ def main():
 
     # First, use the oracle model to provide the positive examples, which are sampled from the oracle data distribution
     # generate_samples(sess, target_lstm, BATCH_SIZE, generated_num, positive_file)
+    vocab = Vocab()
+    vocab.construct(parsed_tweet_file)
+    vocab.word2id(positive_file)
     gen_data_loader.create_batches(positive_file)
 
     log = open('save/experiment-log.txt', 'w')
@@ -155,6 +161,7 @@ def main():
             buffer = 'epoch:\t' + str(total_batch) + '\tnll:\t' + str(test_loss) + '\n'
             print 'total_batch: ', total_batch, 'test_loss: ', test_loss
             log.write(buffer)
+            vocab.id2word(eval_file, generated_tweet_file.format(total_batch))
 
         # Update roll-out parameters
         rollout.update_params()
