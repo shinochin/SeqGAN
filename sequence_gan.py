@@ -107,7 +107,7 @@ def main():
     # generate_samples(sess, target_lstm, BATCH_SIZE, generated_num, positive_file)
     vocab = Vocab()
     vocab.construct(parsed_tweet_file)
-    vocab.word2id(positive_file)
+    vocab.word2id(parsed_tweet_file, positive_file)
     gen_data_loader.create_batches(positive_file)
 
     log = open('save/experiment-log.txt', 'w')
